@@ -1,0 +1,32 @@
+#include <cstdio>
+#include <queue>
+
+struct Item{
+    int s,b;
+    Item(int s,int b): s(s), b(b){}
+    bool operator <(struct Item &t){
+        return s>t.s;
+    }
+
+};
+void merge(int *A, int *B, int *C, int n){
+    std::priority_queue<Item> pq;
+    for(int i= 0;i<n;++i){
+        pq.push(Item(A[i]+B[i],0));
+    }
+    for(int i =0;i<n;++i){
+        Item t = pq.top();
+        pq.pop();
+        C[i] = t.s;
+        int b = t.b;
+        if(b+1<n) pq.push(Item(A[i]+B[i],b+1));
+    }
+}
+int n;
+int main(){
+    while(scanf("%d", &n)==1){
+
+
+    }
+    return 1;
+}

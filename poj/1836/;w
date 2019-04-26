@@ -1,0 +1,12 @@
+# -*- coding: utf-8 -*-
+
+
+# poj -u weifu -p woof0418 -n 1836 main.cpp -l 4
+
+import commands
+import getopt
+
+def main(argv):
+    filename = ''
+    opts, args = getopt.getopt(argv, "hi:i",)
+    a, b = commands.getstatusoutput('poj -u weifu -p woof0418 -n 1836 main.cpp -l 4')

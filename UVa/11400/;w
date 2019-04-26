@@ -1,0 +1,45 @@
+#include <cstdio>
+#include <algorithm>
+
+
+#define size 1001
+#define REP(i,n) for(int i=0; i<n; ++i)
+
+struct li{
+    int V;
+    int K;
+    int C;
+    int L;
+
+    bool operator < (const li& b){
+        return V < b.V;
+    }
+};
+
+long dp[size];
+using namespace std;
+
+int main(){
+    int n;
+    while(scanf("%d", &n) == 1 && n){
+        struct li l [size];
+        REP(i,n){
+                scanf("%d %d %d %d"
+                        ,&l[i].V
+                        ,&l[i].K
+                        ,&l[i].C
+                        ,&l[i].L);
+        }
+        sort(l,l+n);
+        for(int i = 0;i<n;++i)
+        {
+            long ans = &dp[i];
+            for(int k=0; k<=i)
+            {
+
+            }
+        }
+
+
+    }
+}

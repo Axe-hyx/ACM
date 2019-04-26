@@ -1,0 +1,57 @@
+#include <cstdio>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+#define ss 10000 + 5
+#define INF 10000
+int n;
+
+int dp[ss][3], f[ss];
+vector<int> son[ss],t;
+void dfs(int u,int fa){
+    t.push_back(u);
+    f[u] = fa;
+    for(int i=0;i<son[u].size();++i){
+        int v = son[u][i];
+        if(v != fa)
+            dfs(v, u);
+    }
+}
+int main(){
+    while(1){
+        scanf("%d", &n);
+        for(int i=0;i<n;++i) son[i].clear();
+        for(int i=0;i<n;++i){
+            int l,r;
+            scanf("%d %d", &l,&r);
+            l--, r--;
+            son[l].push_back(r);
+            son[r].push_back(l);
+        }
+
+        dfs(0,-1);
+
+        for(int i=t.size()-1; i>=0; --i)
+        {
+            int u = t[i];
+            dp[u][0] = 1, dp[u][1] = 0;
+            for(int i=0;i<son[u].size();++i){
+                int v = son[u][i];
+                if(v == f[u]) continue;
+                dp[u][0] += min(dp[v][0], dp[v][1]);
+                dp[u][1] += dp[v][2];
+                if(dp[u][0] > INF) dp[u][0] =INF;
+                if(dp[u][1] > INF) dp[u][1] =INF;
+            }
+            dp[u][2] = INF;
+            for(int i=0;i<son[u].size();++i){
+                int v = son[u][i];
+                if(v == f[u]) continue;
+                dp[u][2] = min(dp[u][1]- dp[v][2] + dp[v][0], dp[u][2]);
+            }
+            return 1;
+        }
+
+    }
+}

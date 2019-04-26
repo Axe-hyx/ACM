@@ -1,0 +1,54 @@
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+#define INf 0x1f1f1f1f
+using namespace std;
+int n,m;
+int cost[10][10];
+int dp[59050][11];
+int base[12] = {0, 1, 3, 9, 27, 81, 243, 729, 2187, 6561, 19683, 59049};
+int g[10][10];
+#define INF 0x1f1f1f1f
+int state[59050][11];
+int main(){
+    while(scanf("%d %d", &m, &n) == 2){
+        if(!m || !n) break;
+        for(int i=0;i<base[m+1];++i){
+            int t = i;
+            for(int k=0;k<10;++k){
+                state[i][k] = i% 3;
+                t /=3;
+                if(!t) break;
+            }
+        }
+        memset(g,INF, sizeof(g));
+        for(int i =0;i<n;++i){
+            int a,b;
+            scanf("%d %d",&a, &b);
+            scanf("%d", &g[a-1][b-1]);
+        }
+        int ans = INF;
+        memset(dp,INF,sizeof(dp));
+        for(int i=0; i<m;++i){
+            dp[state[base[i+1]][i] = 0;
+        }
+        for(int i =0;i<base[m+1];++i){
+            bool all =1;
+            for(int k=0;k<m;++k){
+                if(!state[i][k]) {all = 0;continue;}
+
+                for(int l=0;l<m;++l){
+                    if(l==k || g[k][l] == INF||state[i][l]>=2 ) continue;
+                    int ds = i + base[l+1];
+                    dp[ds][l]= min(dp[ds][l], dp[i][k] + g[k][l]);
+                }
+            }
+            if(all){
+                for(int e=0;e<m;++e){
+                    ans  = min(ans, dp[i][e]);
+                }
+            }
+        }
+        printf("%d\n", ans);
+    }
+}
